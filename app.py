@@ -50,3 +50,15 @@ st.dataframe(reviews)
 # Chart
 st.subheader("📊 Ratings Distribution")
 st.bar_chart(reviews.set_index("ContentID")["Stars"])
+st.subheader("🔍 Actor Search (Query System)")
+
+actor_input = st.text_input("Enter Actor Name")
+
+if actor_input:
+    result = merged[merged["Legal_Name"].str.contains(actor_input, case=False)]
+
+    if not result.empty:
+        st.success(f"Showing results for: {actor_input}")
+        st.dataframe(result[["Title", "Legal_Name"]])
+    else:
+        st.warning("No results found")
